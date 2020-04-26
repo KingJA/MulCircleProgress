@@ -1,14 +1,16 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
 
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
     }
 
     buildTypes {
@@ -23,4 +25,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:support-annotations:${SUPPORT_VERSION}"
+}
+
+publish {
+    artifactId = 'mulcircleprogress'
+    userOrg = 'kingja'
+    groupId = 'com.kingja.mulcircleprogress'
+    publishVersion = '1.1.0'
+    desc = 'Android library used multiple circle progress.'
+    website = 'https://github.com/KingJA/MulCircleProgress'
+
 }
