@@ -31,7 +31,7 @@ publish {
     artifactId = 'mulcircleprogress'
     userOrg = 'kingja'
     groupId = 'com.kingja.mulcircleprogress'
-    publishVersion = '1.1.0'
+    publishVersion = '1.1.1'
     desc = 'Android library used multiple circle progress.'
     website = 'https://github.com/KingJA/MulCircleProgress'
 

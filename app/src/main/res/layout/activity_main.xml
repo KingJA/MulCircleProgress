@@ -21,6 +21,7 @@
         app:progressProgressColor="#2196F3"
         app:progressRadius="20dp"
         app:progressWidth="10dp"
+        app:progressCount="7"
         android:layout_width="100dp"
         android:layout_height="100dp"/>
 

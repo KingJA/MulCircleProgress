@@ -6,6 +6,7 @@
             <flag name="circle" value="0"/>
             <flag name="square" value="1"/>
         </attr>
+        <attr name="progressCount" format="integer"/>
         <attr name="progressRadius" format="dimension"/>
         <attr name="progressWidth" format="dimension"/>
         <attr name="progressDividerWidth" format="dimension"/>

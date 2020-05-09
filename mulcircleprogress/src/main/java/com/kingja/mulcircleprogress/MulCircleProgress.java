@@ -3,12 +3,10 @@ package com.kingja.mulcircleprogress;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -21,6 +19,7 @@ import java.util.List;
  * Email:kingjavip@gmail.com
  */
 public class MulCircleProgress extends View {
+    private static final int DEFAULT_PROGRESS_COUNT = 3;
     private static final int DEFAULT_PROGRESS_DIVIDER_WIDTH = 2;
     private static final int DEFAULT_PROGRESS_RADIUS = 50;
     private static final int DEFAULT_PROGRESS_WIDTH = 20;
@@ -42,6 +41,7 @@ public class MulCircleProgress extends View {
     private Paint progressPaint;
     private RectF arcRectF;
     private Paint progressBlackgroundPaint;
+    private int progressCount;
 
     public MulCircleProgress(Context context) {
         this(context, null);
@@ -73,6 +73,7 @@ public class MulCircleProgress extends View {
                 dp2px(DEFAULT_PROGRESS_DIVIDER_WIDTH));
         progressDividerColor = typedArray.getColor(R.styleable.MulCircleProgress_progressDividerColor,
                 DEFAULT_DIVIDER_COLOR);
+        progressCount = typedArray.getInteger(R.styleable.MulCircleProgress_progressCount, DEFAULT_PROGRESS_COUNT);
         typedArray.recycle();
     }
 
@@ -83,13 +84,10 @@ public class MulCircleProgress extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.e(TAG, "progressRadius: " + progressRadius);
-        Log.e(TAG, "progressDividerWidth: " + progressDividerWidth);
-        Log.e(TAG, "progressWidth: " + progressWidth);
-        int count = dataList.size();
+        int count = (dataList == null ? progressCount : dataList.size());
         int size = (int) (progressRadius * 2 + (progressWidth + progressDividerWidth) * count * 2);
         setMeasuredDimension(size, size);
+        invalidate();
     }
 
 
@@ -129,34 +127,23 @@ public class MulCircleProgress extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         size = getMeasuredWidth();
-
-        Log.e(TAG, "size: " + size);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
+        if (dataList == null) {
+            return;
+        }
         float dRadius = progressRadius + 0.5f * progressDividerWidth;
         float pRadius = progressRadius + progressDividerWidth + 0.5f * progressWidth;
         for (int i = 0; i < dataList.size(); i++) {
             IProgressBar progressItem = dataList.get(i);
-
-
-
-
-
             /*绘制圆*/
             canvas.drawCircle(0.5f * size, 0.5f * size, progressRadius, circlePaint);
             /*分割线 */
 
             canvas.drawCircle(0.5f * size, 0.5f * size, dRadius, dividerPaint);
             dRadius += progressDividerWidth + progressWidth;
-
-
-            Log.e(TAG, "pRadius: " + pRadius);
-
-            Log.e(TAG, "getProgress: " + (progressItem.getProgress() * 360));
             /*进度条*/
             arcRectF.set(0.5f * size - pRadius, 0.5f * size - pRadius, 0.5f * size + pRadius, 0.5f * size + pRadius);
             canvas.drawCircle(0.5f * size, 0.5f * size, pRadius, progressBlackgroundPaint);

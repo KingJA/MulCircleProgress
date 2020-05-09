@@ -1,6 +1,7 @@
 package sample.kingja.mulcircleprogress;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.kingja.mulcircleprogress.MulCircleProgress;
@@ -14,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MulCircleProgress mcp = findViewById(R.id.mcp);
-        List<Progress> progressList = new ArrayList<>();
+        final MulCircleProgress mcp = findViewById(R.id.mcp);
+        final List<Progress> progressList = new ArrayList<>();
         progressList.add(new Progress("#999999","#2196F3",0.55f));
         progressList.add(new Progress("#999999","#9C27B0",0.23f));
         progressList.add(new Progress("#999999","#4CAF50",0.33f));
@@ -23,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
         progressList.add(new Progress("#999999","#E91E63",0.75f));
         progressList.add(new Progress("#999999","#FF5722",0.45f));
         progressList.add(new Progress("#999999","#009688",1.0f));
-        mcp.setData(progressList);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mcp.setData(progressList);
+            }
+        },1000);
+
     }
 }
